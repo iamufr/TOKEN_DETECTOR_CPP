@@ -127,29 +127,41 @@ class JWTValidator : public ITokenValidator
 public:
     bool isValid(const std::string &token) const noexcept override
     {
-        if (token.length() < 36 || token.substr(0, 3) != "eyJ")
+        const size_t len = token.length();
+        if (len < 36)
             return false;
+        
+        const char* data = token.data();
+        
+        if (data[0] != 'e' || data[1] != 'y' || data[2] != 'J')
+            return false;
+        
         int dots = 0;
         size_t segStart = 0;
-        for (size_t i = 0; i < token.length(); ++i)
+        
+        for (size_t i = 0; i < len; ++i)
         {
-            if (token[i] == '.')
+            const char c = data[i];
+            if (c == '.')
             {
                 if (i - segStart < 10)
                     return false;
                 ++dots;
                 segStart = i + 1;
-                if (dots == 1 && i + 3 < token.length() && token.substr(i + 1, 3) != "eyJ")
+                
+                if (dots == 1 && i + 3 < len && 
+                    (data[i + 1] != 'e' || data[i + 2] != 'y' || data[i + 3] != 'J'))
                     return false;
+                
                 if (dots > 2)
                     return false;
             }
-            else if (!CharacterClassifier::isAlphaNumeric(token[i]) && token[i] != '-' && token[i] != '_')
+            else if (!CharacterClassifier::isAlphaNumeric(c) && c != '-' && c != '_')
             {
                 return false;
             }
         }
-        return dots == 2 && token.length() - segStart >= 10;
+        return dots == 2 && len - segStart >= 10;
     }
     TokenType getType() const noexcept override { return TokenType::JWT; }
 };
@@ -159,20 +171,31 @@ class SimpleAPIKeyValidator : public ITokenValidator
 public:
     bool isValid(const std::string &token) const noexcept override
     {
-        if (token.length() < 15)
+        const size_t len = token.length();
+        if (len < 15)
             return false;
+        
+        const char* data = token.data();
         size_t prefixLen = 0;
-        if (token.substr(0, 3) == "sk_" || token.substr(0, 3) == "pk_")
+        
+        if (len >= 3 && data[0] == 's' && data[1] == 'k' && data[2] == '_')
             prefixLen = 3;
-        else if (token.length() >= 17 && (token.substr(0, 5) == "live_" || token.substr(0, 5) == "test_"))
+        else if (len >= 3 && data[0] == 'p' && data[1] == 'k' && data[2] == '_')
+            prefixLen = 3;
+        else if (len >= 17 && data[0] == 'l' && data[1] == 'i' && data[2] == 'v' && data[3] == 'e' && data[4] == '_')
+            prefixLen = 5;
+        else if (len >= 17 && data[0] == 't' && data[1] == 'e' && data[2] == 's' && data[3] == 't' && data[4] == '_')
             prefixLen = 5;
         else
             return false;
-        if (token.length() - prefixLen < 10)
+        
+        if (len - prefixLen < 10)
             return false;
-        for (char c : token)
-            if (!CharacterClassifier::isAlphaNumeric(c) && c != '_')
+        
+        for (size_t i = 0; i < len; ++i)
+            if (!CharacterClassifier::isAlphaNumeric(data[i]) && data[i] != '_')
                 return false;
+        
         return true;
     }
     TokenType getType() const noexcept override { return TokenType::API_KEY_SIMPLE; }
