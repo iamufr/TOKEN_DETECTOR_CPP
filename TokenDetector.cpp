@@ -130,15 +130,15 @@ public:
         const size_t len = token.length();
         if (len < 36)
             return false;
-        
-        const char* data = token.data();
-        
+
+        const char *data = token.data();
+
         if (data[0] != 'e' || data[1] != 'y' || data[2] != 'J')
             return false;
-        
+
         int dots = 0;
         size_t segStart = 0;
-        
+
         for (size_t i = 0; i < len; ++i)
         {
             const char c = data[i];
@@ -148,11 +148,11 @@ public:
                     return false;
                 ++dots;
                 segStart = i + 1;
-                
-                if (dots == 1 && i + 3 < len && 
+
+                if (dots == 1 && i + 3 < len &&
                     (data[i + 1] != 'e' || data[i + 2] != 'y' || data[i + 3] != 'J'))
                     return false;
-                
+
                 if (dots > 2)
                     return false;
             }
@@ -174,10 +174,10 @@ public:
         const size_t len = token.length();
         if (len < 15)
             return false;
-        
-        const char* data = token.data();
+
+        const char *data = token.data();
         size_t prefixLen = 0;
-        
+
         if (len >= 3 && data[0] == 's' && data[1] == 'k' && data[2] == '_')
             prefixLen = 3;
         else if (len >= 3 && data[0] == 'p' && data[1] == 'k' && data[2] == '_')
@@ -188,14 +188,14 @@ public:
             prefixLen = 5;
         else
             return false;
-        
+
         if (len - prefixLen < 10)
             return false;
-        
+
         for (size_t i = 0; i < len; ++i)
             if (!CharacterClassifier::isAlphaNumeric(data[i]) && data[i] != '_')
                 return false;
-        
+
         return true;
     }
     TokenType getType() const noexcept override { return TokenType::API_KEY_SIMPLE; }
@@ -666,8 +666,6 @@ void runPerformanceBenchmark()
     std::cout << "=== PERFORMANCE BENCHMARK ===\n";
     std::cout << std::string(100, '=') << "\n";
 
-    auto scanner = TokenDetectorFactory::createScanner();
-
     std::vector<std::string> testCases = {
         "UUID: 550e8400-e29b-41d4-a716-446655440000",
         "JWT: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
@@ -698,16 +696,21 @@ void runPerformanceBenchmark()
 
     for (int t = 0; t < numThreads; ++t)
     {
-        threads.emplace_back([&testCases, &totalTokensFound, iterationsPerThread, &scanner]()
-                             {
-            long long localTokensFound = 0;
-            for (int i = 0; i < iterationsPerThread; ++i) {
-                for (const auto& test : testCases) {
-                    auto matches = scanner->extract(test);
-                    localTokensFound += matches.size();
+        threads.emplace_back(
+            [&testCases, &totalTokensFound, iterationsPerThread]()
+            {
+                auto scanner = TokenDetectorFactory::createScanner();
+                long long localTokensFound = 0;
+                for (int i = 0; i < iterationsPerThread; ++i)
+                {
+                    for (const auto &test : testCases)
+                    {
+                        auto matches = scanner->extract(test);
+                        localTokensFound += matches.size();
+                    }
                 }
-            }
-            totalTokensFound += localTokensFound; });
+                totalTokensFound += localTokensFound;
+            });
     }
 
     for (auto &thread : threads)
