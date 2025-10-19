@@ -62,10 +62,10 @@ private:
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
-        0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x00, 0x00, 0x00, 0x00, 0x04,
-        0x00, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05,
-        0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04,
+        0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x00, 0x00, 0x00, 0x00, 0x04,
+        0x00, 0x07, 0x07, 0x07, 0x07, 0x07, 0x07, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04,
+        0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -228,6 +228,175 @@ class TokenScanner
 {
 private:
     static constexpr size_t MAX_INPUT_SIZE = 10 * 1024 * 1024;
+
+    FORCE_INLINE bool containsUUID(const char *data, size_t len) const noexcept
+    {
+        for (size_t i = 0; i + 36 <= len; ++i)
+        {
+            if (LIKELY(data[i + 8] == '-' && data[i + 13] == '-' && data[i + 18] == '-' && data[i + 23] == '-'))
+            {
+                bool ok = true;
+                for (size_t j = 0; j < 8 && ok; ++j)
+                    ok = CharacterClassifier::isHexDigit(data[i + j]);
+                for (size_t j = 9; j < 13 && ok; ++j)
+                    ok = CharacterClassifier::isHexDigit(data[i + j]);
+                for (size_t j = 14; j < 18 && ok; ++j)
+                    ok = CharacterClassifier::isHexDigit(data[i + j]);
+                for (size_t j = 19; j < 23 && ok; ++j)
+                    ok = CharacterClassifier::isHexDigit(data[i + j]);
+                for (size_t j = 24; j < 36 && ok; ++j)
+                    ok = CharacterClassifier::isHexDigit(data[i + j]);
+                if (ok)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    FORCE_INLINE bool containsJWT(const char *data, size_t len) const noexcept
+    {
+        for (size_t i = 0; i + 36 < len; ++i)
+        {
+            if (UNLIKELY(data[i] != 'e' || data[i + 1] != 'y' || data[i + 2] != 'J'))
+                continue;
+            size_t e = i + 3;
+            int dots = 0;
+            size_t segStart = i;
+            bool ok = true;
+            while (e < len && ok)
+            {
+                char c = data[e];
+                if (c == '.')
+                {
+                    if (dots == 2)
+                        break;
+                    if (e - segStart < 10)
+                    {
+                        ok = false;
+                        break;
+                    }
+                    ++dots;
+                    segStart = e + 1;
+                    if (dots == 1 && e + 3 < len && (data[e + 1] != 'e' || data[e + 2] != 'y' || data[e + 3] != 'J'))
+                    {
+                        ok = false;
+                        break;
+                    }
+                    if (dots > 2)
+                        break;
+                }
+                else if (!CharacterClassifier::isAlphaNumeric(c) && c != '-' && c != '_')
+                    break;
+                ++e;
+            }
+            if (ok && e - segStart < 10)
+                ok = false;
+            if (ok && dots == 2 && e > i + 36)
+                return true;
+        }
+        return false;
+    }
+
+    FORCE_INLINE bool containsAPIKey(const char *data, size_t len) const noexcept
+    {
+        for (size_t i = 0; i + 15 <= len; ++i)
+        {
+            size_t pl = 0, ml = 0;
+            if (data[i] == 's' && data[i + 1] == 'k' && data[i + 2] == '_')
+            {
+                pl = 3;
+                ml = 15;
+            }
+            else if (data[i] == 'p' && data[i + 1] == 'k' && data[i + 2] == '_')
+            {
+                pl = 3;
+                ml = 15;
+            }
+            else if (i + 17 <= len && data[i] == 'l' && data[i + 1] == 'i' && data[i + 2] == 'v' && data[i + 3] == 'e' && data[i + 4] == '_')
+            {
+                pl = 5;
+                ml = 17;
+            }
+            else if (i + 17 <= len && data[i] == 't' && data[i + 1] == 'e' && data[i + 2] == 's' && data[i + 3] == 't' && data[i + 4] == '_')
+            {
+                pl = 5;
+                ml = 17;
+            }
+            else
+                continue;
+            size_t e = i + pl;
+            while (e < len && (CharacterClassifier::isAlphaNumeric(data[e]) || data[e] == '_'))
+                ++e;
+            if (e - i >= ml && (e - i - pl) >= 10)
+                return true;
+        }
+        return false;
+    }
+
+    FORCE_INLINE bool containsJSON(const char *data, size_t len) const noexcept
+    {
+        for (size_t i = 0; i < len; ++i)
+        {
+            if (data[i] != '{')
+                continue;
+            size_t c = findBrace(data, i, len);
+            if (c == SIZE_MAX)
+                continue;
+
+            bool pk = false;
+            size_t pkPos = 0;
+            for (size_t j = i; j < c - 12 && !pk; ++j)
+            {
+                if (data[j] == 'p' && std::memcmp(data + j, "private_key", 11) == 0)
+                {
+                    pk = true;
+                    pkPos = j;
+                }
+            }
+
+            if (!pk)
+            {
+                ++i;
+                continue;
+            }
+
+            for (size_t j = pkPos; j < c - 26; ++j)
+            {
+                if (data[j] == '-' && std::memcmp(data + j, "-----BEGIN PRIVATE KEY-----", 27) == 0)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    FORCE_INLINE bool containsSHA(const char *data, size_t len) const noexcept
+    {
+        for (size_t i = 0; i < len; ++i)
+        {
+            if (UNLIKELY(!CharacterClassifier::isHexDigit(data[i])))
+                continue;
+
+            if (i > 0 && CharacterClassifier::isHexDigit(data[i - 1]))
+                continue;
+
+            size_t hc = 1;
+            while (i + hc < len && CharacterClassifier::isHexDigit(data[i + hc]))
+                ++hc;
+
+            bool ok = (i + hc >= len || !CharacterClassifier::isHexDigit(data[i + hc]));
+            if (!ok)
+            {
+                i += hc - 1;
+                continue;
+            }
+
+            if (hc >= 56)
+                return true;
+
+            i += hc - 1;
+        }
+        return false;
+    }
 
     FORCE_INLINE void scanUUID(const char *data, size_t len, std::vector<TokenMatch> &m) const noexcept
     {
@@ -476,6 +645,28 @@ private:
     }
 
 public:
+    bool contains(const std::string &text) const noexcept
+    {
+        const size_t len = text.length();
+        if (UNLIKELY(len > MAX_INPUT_SIZE || len < 5))
+            return false;
+
+        const char *data = text.data();
+
+        if (containsUUID(data, len))
+            return true;
+        if (containsJWT(data, len))
+            return true;
+        if (containsAPIKey(data, len))
+            return true;
+        if (containsJSON(data, len))
+            return true;
+        if (containsSHA(data, len))
+            return true;
+
+        return false;
+    }
+
     std::vector<TokenMatch> extract(const std::string &text) const noexcept
     {
         std::vector<TokenMatch> m;
@@ -633,6 +824,62 @@ void runValidationTests()
             ++passed;
     }
     std::cout << "\nResult: " << passed << "/" << tests.size() << " passed (" << (passed * 100 / tests.size()) << "%)\n\n";
+}
+
+void runContainsTests()
+{
+    std::cout << "\n"
+              << std::string(100, '=') << "\n";
+    std::cout << "=== CONTAINS METHOD TESTS ===\n";
+    std::cout << std::string(100, '=') << "\n\n";
+
+    auto scanner = TokenDetectorFactory::createScanner();
+
+    struct TestCase
+    {
+        std::string input;
+        bool expectedResult;
+        std::string description;
+    };
+
+    std::vector<TestCase> tests = {
+        {"Hello world, no tokens here!", false, "Plain text without tokens"},
+        {"UUID: 550e8400-e29b-41d4-a716-446655440000", true, "Text with UUID"},
+        {"Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U", true, "Text with JWT"},
+        {"API: sk_live_12345abcde67890fghij11223", true, "Text with API key"},
+        {"Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", true, "Text with SHA-256"},
+        {R"({"private_key": "-----BEGIN PRIVATE KEY-----\ntest\n-----END PRIVATE KEY-----\n"})", true, "JSON with private key"},
+        {"Just some random text 12345", false, "Random text with numbers"},
+        {"", false, "Empty string"},
+        {"a", false, "Single character"},
+        {std::string(1000000, 'x'), false, "Large string without tokens"},
+        {std::string(500000, 'x') + "550e8400-e29b-41d4-a716-446655440000" + std::string(500000, 'y'), true, "Large string with UUID in middle"},
+    };
+
+    int passed = 0;
+    for (const auto &test : tests)
+    {
+        auto start = std::chrono::high_resolution_clock::now();
+        bool result = scanner->contains(test.input);
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+        bool testPassed = (result == test.expectedResult);
+        std::cout << (testPassed ? "✓" : "✗") << " " << test.description;
+        std::cout << " (" << duration.count() << " μs)" << std::endl;
+
+        if (!testPassed)
+        {
+            std::cout << "  Expected: " << (test.expectedResult ? "true" : "false")
+                      << ", Got: " << (result ? "true" : "false") << std::endl;
+        }
+
+        if (testPassed)
+            ++passed;
+    }
+
+    std::cout << "\nResult: " << passed << "/" << tests.size() << " passed ("
+              << (passed * 100 / tests.size()) << "%)\n\n";
 }
 
 void runScanningTests()
@@ -1032,6 +1279,7 @@ int main()
     try
     {
         runValidationTests();
+        runContainsTests();
         runScanningTests();
 
         std::cout << "\n"
