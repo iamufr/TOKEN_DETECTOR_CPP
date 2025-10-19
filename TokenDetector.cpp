@@ -419,22 +419,58 @@ private:
             size_t c = findBrace(data, i, len);
             if (c == SIZE_MAX)
                 continue;
-            bool pk = false, bk = false;
+
+            bool pk = false;
+            size_t pkPos = 0;
             for (size_t j = i; j < c - 12 && !pk; ++j)
+            {
                 if (data[j] == 'p' && std::memcmp(data + j, "private_key", 11) == 0)
+                {
                     pk = true;
+                    pkPos = j;
+                }
+            }
+
             if (!pk)
             {
                 ++i;
                 continue;
             }
-            for (size_t j = i; j < c - 26 && !bk; ++j)
-                if (data[j] == '-' && std::memcmp(data + j, "-----BEGIN PRIVATE KEY-----", 27) == 0)
-                    bk = true;
-            if (pk && bk)
+
+            size_t beginPos = SIZE_MAX;
+            for (size_t j = pkPos; j < c - 26; ++j)
             {
-                m.emplace_back(TokenType::API_KEY_JSON, std::string(data + i, c - i + 1), i);
+                if (data[j] == '-' && std::memcmp(data + j, "-----BEGIN PRIVATE KEY-----", 27) == 0)
+                {
+                    beginPos = j;
+                    break;
+                }
+            }
+
+            if (beginPos == SIZE_MAX)
+            {
+                ++i;
+                continue;
+            }
+
+            size_t endPos = SIZE_MAX;
+            for (size_t j = beginPos + 27; j < c - 25; ++j)
+            {
+                if (data[j] == '-' && std::memcmp(data + j, "-----END PRIVATE KEY-----", 25) == 0)
+                {
+                    endPos = j + 25;
+                    break;
+                }
+            }
+
+            if (endPos != SIZE_MAX && endPos <= c)
+            {
+                m.emplace_back(TokenType::API_KEY_JSON, std::string(data + beginPos, endPos - beginPos), beginPos);
                 i = c;
+            }
+            else
+            {
+                ++i;
             }
         }
     }
@@ -651,7 +687,7 @@ void runScanningTests()
         "version": "3.0.1-stable",
         "checksum": {
             "algorithm": "sha256",
-            "hash": "a1b2c3d4e5f678901234567890abcdef1234567890abcdef1234567890abcdef"
+            "hash": "a1b2c3d4e5f678901234567890abcdef1234567890abcdef1234567890abcdefabcx"
         }
     })";
 
@@ -661,7 +697,7 @@ void runScanningTests()
         "timestamp": "2025-10-19T12:00:00Z",
         "signature": {
             "algorithm": "sha512",
-            "hash": "3c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+            "hash": "3c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234abcx"
         }
     })";
 
@@ -670,8 +706,8 @@ void runScanningTests()
         "asset_url": "https://example.com/downloads/quantumleap-v2.5.0.zip",
         "release_date": "2025-10-18",
         "verification_hashes": {
-            "sha224": "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
-            "sha384": "0933909688419962a559286d525031b6833b38101377284563a819b62a63816405204487cc5a36376511356a6431f4e5"
+            "sha224": "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42fabcx",
+            "sha384": "0933909688419962a559286d525031b6833b38101377284563a819b62a63816405204487cc5a36376511356a6431f4e5abcx"
         }
     })";
 
