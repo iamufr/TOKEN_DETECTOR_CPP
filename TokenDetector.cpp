@@ -717,6 +717,388 @@ public:
 // TEST SUITE
 // ============================================================================
 
+const std::string json_string_1 = R"({
+        "id": "d34d8a52-3e28-4b62-8e11-1e0e5a8f27cf",
+        "name": "John Doe",
+        "username": "johndoe",
+        "apikey": "sk_live_aBcDeFgHiJkLmNoPqRsTuVwXyZ",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+    })";
+
+const std::string json_string_2 = R"({
+        "user_id": "usr_1a2b3c4d",
+        "username": "alex_morgan",
+        "login_timestamp": "2025-10-19T16:25:00Z",
+        "session_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbGV4X21vcmdhbiIsImV4cCI6MTczOTg0ODAwMCwiaWF0IjoxNzM5ODQ0NDAwfQ.h3g9s7aF4JkLpWqRt8uXzVn_C6bZ2eY1dDfG5hI0jKo"
+    })";
+
+const std::string json_string_3 = R"({
+        "event_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "service": "payment-gateway",
+        "level": "INFO",
+        "message": "Payment of 50.00 USD processed successfully for order #ORD-9876."
+    })";
+
+const std::string json_string_4 = R"({
+        "service_name": "weather_api_client",
+        "version": "v1.2.0",
+        "timeout_ms": 5000,
+        "api_key": "pk_live_fA7bC9dE1gH3jK5mN7pQ9sT2vX4z"
+    })";
+
+const std::string json_string_5 = R"({
+        "filename": "firmware_update_v3.bin",
+        "filesize_bytes": 8388608,
+        "version": "3.0.1-stable",
+        "checksum": {
+            "algorithm": "sha256",
+            "hash": "a1b2c3d4e5f678901234567890abcdef1234567890abcdef1234567890abcdefabcx"
+        }
+    })";
+
+const std::string json_string_6 = R"({
+        "document_id": "DOC-LEGAL-2025-042",
+        "signer_id": "signer_jane_doe",
+        "timestamp": "2025-10-19T12:00:00Z",
+        "signature": {
+            "algorithm": "sha512",
+            "hash": "3c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234abcx"
+        }
+    })";
+
+const std::string json_string_7 = R"({
+        "release_name": "QuantumLeap v2.5.0",
+        "asset_url": "https://example.com/downloads/quantumleap-v2.5.0.zip",
+        "release_date": "2025-10-18",
+        "verification_hashes": {
+            "sha224": "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42fabcx",
+            "sha384": "0933909688419962a559286d525031b6833b38101377284563a819b62a63816405204487cc5a36376511356a6431f4e5abcx"
+        }
+    })";
+
+const std::string json_string_8 = R"({
+        "type": "service_account",
+        "project_id": "your-gcp-project-12345",
+        "private_key_id": "a1b2c3d4e5f67890abcdef1234567890abcdef12",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQD... (long key content) ...\n-----END PRIVATE KEY-----\n",
+        "client_email": "my-service-account@your-gcp-project-12345.iam.gserviceaccount.com",
+        "client_id": "123456789012345678901",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40your-gcp-project-12345.iam.gserviceaccount.com"
+    })";
+
+const std::string json_string_9 = R"|({
+        "event_trace_id": "c7a8b6e0-4f5a-4b9d-8c1e-2f0a1b3d4e5f",
+        "timestamp": "2025-10-19T11:05:42Z",
+        "source_ip": "203.0.113.75",
+        "auth_details": {
+            "method": "bearer",
+            "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLmV4YW1wbGUuY29tIiwiYXVkIjoiYXBpLmV4YW1wbGUuY29tIiwic3ViIjoidXNlcl80MjcifQ.aBcDeFgHiJkLmNoPqRsTuVwXyZ... (signature)"
+        },
+        "client_key": "sk_live_aBcDeFgHiJkLmNoPqRsTuVwXyZ"
+    })|";
+
+const std::string json_string_10 = R"({
+        "user_profile": "developer_jane",
+        "mfa_enabled": true,
+        "authorized_devices": [
+            "2b8a7c1d-1e1f-4b6e-8d3c-9a0b1c2d3e4f",
+            "9f8b7a6d-5e4f-4c3e-8b1a-2d3c4e5f6a7b",
+            "6c5b4a3d-2e1f-4a9b-8c7d-6e5f4a3b2c1d"
+        ]
+    })";
+
+const std::string json_string_11 = R"({
+        "commit_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "parent_hash": "da9e7b23d9a1f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5",
+        "author": "Alice",
+        "message": "feat: Implement new token scanning module",
+        "attestation": {
+            "type": "binary_integrity",
+            "hash": "4d1a2b3c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234",
+            "algorithm": "sha512"
+        }
+    })";
+
+const std::string json_string_12 = R"({
+        "tx_id": "f8a7e2c3d4b5a6978d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e",
+        "block_height": 840000,
+        "inputs": [
+            {
+            "from_address_hash": "3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f",
+            "algorithm": "sha384"
+            }
+        ],
+        "outputs": [
+            {
+            "to_address_hash": "c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
+            "algorithm": "sha224"
+            }
+        ]
+    })";
+
+const std::string json_string_13 = R"({
+        "log_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+        "level": "ERROR",
+        "service": "authentication-service",
+        "message": "Failed to validate user credentials.",
+        "payload": "{\"error_code\": 101, \"attempt_id\": \"b8c6e1f0-5d4a-4c3b-8a29-1e0f2d3c4b5a\", \"api_key_used\": \"pk_test_aBcDeFgHiJkLmNoPqRsTuVwXyZ\"}"
+    })";
+
+const std::string json_string_14 = R"({
+        "transaction_id": "txn_789123",
+        "data": {
+            "user_info": {
+            "profile": {
+                "user_id": 1024,
+                "session_data": {
+                "is_active": true,
+                "jwt": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZWVwbHlfbmVzdGVkX3Rva2VuIiwiZXhwIjoxNzM5ODU5MjAwfQ.N_fWbY8zQj_V9gL6rHk2wXzYj_C7bZ2eY1dDfG5hI0j"
+                }
+            }
+            }
+        }
+    })";
+
+const std::string json_string_15 = R"({
+        "artifact_id": "build-package-v4.2.1",
+        "build_date": "2025-10-19",
+        "integrity_hashes": [
+            "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
+            "0933909688419962a559286d525031b6833b38101377284563a819b62a63816405204487cc5a36376511356a6431f4e5",
+            "This is not a hash, just a string.",
+            "4d1a2b3c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+        ]
+    })";
+
+const std::string json_string_16 = R"({
+        "product_id": "PROD-XYZ-789",
+        "is_active": true,
+        "description": "This product connects to our new API. Use your request ID (e.g., '123e4567-e89b-12d3-a456-426614174000') for tracking.",
+        "related_docs": [
+            "doc_1", "doc_2"
+        ]
+    })";
+
+const std::string json_string_17 = R"({
+        "acl_id": "acl-prod-config-001",
+        "version": 3,
+        "user_permissions": {
+            "4a0c8b3d-1e1f-4b6e-8d3c-9a0b1c2d3e4f": {
+            "role": "admin",
+            "assigned_apikey": "sk_prod_Z1Y2X3W4V5U6T7S8R9Q0P",
+            "last_session_jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YTBjOGIzZC0xZTFmLTRiNmUtOGQzYy05YTBiMWMyZDNlNGYiLCJyb2xlIjoiYWRtaW4ifQ.eW5jb2RlZF9zaWduYXR1cmU"
+            },
+            "5b1d9c4e-2f2a-5c7f-9e4d-0a1c2d3e4f5a": {
+            "role": "editor",
+            "assigned_apikey": "pk_test_A9B8C7D6E5F4G3H2I1J0K",
+            "last_session_jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjFkOWM0ZS0yZjJhLTVjN2YtOWU0ZC0wYTFjMmQzZTRmNWEiLCJyb2xlIjoiZWRpdG9yIn0.ZGlmZmVyZW50X3NpZ25hdHVyZQ"
+            }
+        }
+    })";
+
+const std::string json_string_18 = R"|({
+        "event_id": "2a8f8a1e-3b2c-4d5e-8f9a-0b1c2d3e4f5a",
+        "type": "invoice.payment_succeeded",
+        "created_at": "2025-10-19T16:30:00Z",
+        "signature_header": "sha256=a1b2c3d4e5f678901234567890abcdef1234567890abcdef1234567890abcdef",
+        "data": {
+            "customer_id": "cus_1a2b3c4d",
+            "invoice_pdf_url": "https://example.com/invoices/inv_456.pdf",
+            "trace_id": "c7a8b6e0-4f5a-4b9d-8c1e-2f0a1b3d4e5f"
+        }
+    })|";
+
+const std::string json_string_19 = R"|({
+        "service_name": "user-profile-service",
+        "database_url": "postgres://user:Abc.123@db.example.com:5432/profiles",
+        "cache_enabled": true,
+        "feature_flags": {
+            "enable_new_dashboard": true,
+            "beta_access_key": "ff_live_a1b2c3d4e5f6g7h8i9j0k"
+        },
+        "deployment_id": "d34d8a52-3e28-4b62-8e11-1e0e5a8f27cf"
+    })|";
+
+const std::string json_string_20 = R"|({
+        "error": {
+            "type": "authentication_error",
+            "code": "api_key_invalid",
+            "message": "The provided API key is not valid. Please check your credentials.",
+            "request_id": "9f8b7a6d-5e4f-4c3e-8b1a-2d3c4e5f6a7b"
+        }
+    })|";
+
+const std::string json_string_21 = R"|({
+        "batch_id": "batch_6c5b4a3d-2e1f-4a9b-8c7d-6e5f4a3b2c1d",
+        "source_system": "inventory-management",
+        "items": [
+            {
+            "item_id": "0a9b8c7d-6e5f-4a3b-2c1d-0a9b8c7d6e5f",
+            "action": "UPDATE_STOCK",
+            "data": { "sku": "XYZ-123", "quantity": 100 }
+            },
+            {
+            "item_id": "1b2c3d4e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
+            "action": "PROCESS_RETURN",
+            "data": { "order_id": "ORD-555" },
+            "processing_token": "eyJhbGciOiJIUzI1NiJ9.eyJpdGVtX2lkIjoiMWIyYzNkNGUtNWY2YS03YjhiLTlkMGUtMWYyYTNiNGM1ZDZlIn0.another_fake_signature"
+            }
+        ]
+    })|";
+
+const std::string json_string_22 = R"|({
+    "batch_id": "daily-sync-20251020-001",
+    "source_system": "order-processing",
+    "items": [
+        {
+            "item_id": 1001,
+            "action": "CREATE_ORDER",
+            "data": { 
+                "product_sku": "ABC-789", 
+                "quantity": 5,
+                "customer_id": "CUST-456"
+            }
+        },
+        {
+            "item_id": 1002,
+            "action": "APPLY_DISCOUNT",
+            "data": { 
+                "order_id": "ORD-2025-A5", 
+                "discount_code": "SAVE20" 
+            }
+        }
+    ]
+})|";
+
+const std::string json_string_23 = R"|({
+    "batch_id": "user-mgmt-20251020-001",
+    "source_system": "admin-dashboard",
+    "items": [
+        {
+            "item_id": "req-101",
+            "action": "CREATE_USER",
+            "data": { 
+                "username": "s.kumar", 
+                "email": "s.kumar@example.com",
+                "group": "auditors"
+            }
+        },
+        {
+            "item_id": "req-102",
+            "action": "UPDATE_GROUP",
+            "data": { 
+                "user_id": 56, 
+                "new_group": "administrators" 
+            }
+        }
+    ]
+})|";
+
+const std::string json_string_24 = R"|({
+    "batch_id": "catalog-sync-daily-45",
+    "source_system": "product-information-manager",
+    "items": [
+        {
+            "item_id": "product-add-550",
+            "action": "ADD_PRODUCT",
+            "data": {
+                "sku": "HW-MUG-01B",
+                "name": "Large Ceramic Mug",
+                "category": "kitchenware",
+                "price": 350.00
+            }
+        },
+        {
+            "item_id": "price-update-912",
+            "action": "CHANGE_PRICE",
+            "data": { 
+                "sku": "SW-TEE-04G", 
+                "new_price": 799.00
+            }
+        }
+    ]
+})|";
+
+const std::string json_string_25 = R"|({
+    "batch_id": "logs-api-gateway-1666281600",
+    "source_system": "api-gateway-prod",
+    "items": [
+        {
+            "item_id": 987654321,
+            "action": "LOG_EVENT",
+            "data": {
+                "level": "ERROR",
+                "message": "Authentication service timeout",
+                "service_code": "AUTH-003"
+            }
+        },
+        {
+            "item_id": 987654322,
+            "action": "LOG_EVENT",
+            "data": {
+                "level": "INFO",
+                "message": "Request processed successfully",
+                "endpoint": "/v1/users/search"
+            }
+        }
+    ]
+})|";
+
+const std::string json_string_26 = R"|({
+    "batch_id": "iot-command-push-farm-sector-7",
+    "source_system": "central-control-system",
+    "items": [
+        {
+            "item_id": "cmd-pump-1138",
+            "action": "SET_STATE",
+            "data": {
+                "device_id": "PUMP-08",
+                "state": "ON",
+                "duration_minutes": 60
+            }
+        },
+        {
+            "item_id": "cmd-sensor-451",
+            "action": "REQUEST_READING",
+            "data": {
+                "device_id": "SOIL-MOISTURE-SENSOR-22",
+                "reading_type": "PERCENTAGE"
+            }
+        }
+    ]
+})|";
+
+const std::string json_string_27 = R"|({
+    "batch_id": "gl-posting-run-eod-20251020",
+    "source_system": "payments-processor",
+    "items": [
+        {
+            "item_id": "txn-45920",
+            "action": "CREDIT",
+            "data": {
+                "account_number": "ACCT-SAVINGS-00123",
+                "amount": 5200.75,
+                "currency": "INR",
+                "description": "Salary Deposit"
+            }
+        },
+        {
+            "item_id": "txn-45921",
+            "action": "DEBIT",
+            "data": {
+                "account_number": "ACCT-SAVINGS-00123",
+                "amount": 350.00,
+                "currency": "INR",
+                "description": "Utility Bill Payment"
+            }
+        }
+    ]
+})|";
+
 std::string tokenTypeToString(TokenType type)
 {
     switch (type)
@@ -843,6 +1225,33 @@ void runContainsTests()
     };
 
     std::vector<TestCase> tests = {
+        {json_string_1, true, "JSON Object with tokens"},
+        {json_string_2, true, "JSON Object with tokens"},
+        {json_string_3, true, "JSON Object with tokens"},
+        {json_string_4, true, "JSON Object with tokens"},
+        {json_string_5, true, "JSON Object with tokens"},
+        {json_string_6, true, "JSON Object with tokens"},
+        {json_string_7, true, "JSON Object with tokens"},
+        {json_string_8, true, "JSON Object with tokens"},
+        {json_string_9, true, "JSON Object with tokens"},
+        {json_string_10, true, "JSON Object with tokens"},
+        {json_string_11, true, "JSON Object with tokens"},
+        {json_string_12, true, "JSON Object with tokens"},
+        {json_string_13, true, "JSON Object with tokens"},
+        {json_string_14, true, "JSON Object with tokens"},
+        {json_string_15, true, "JSON Object with tokens"},
+        {json_string_16, true, "JSON Object with tokens"},
+        {json_string_17, true, "JSON Object with tokens"},
+        {json_string_18, true, "JSON Object with tokens"},
+        {json_string_19, true, "JSON Object with tokens"},
+        {json_string_20, true, "JSON Object with tokens"},
+        {json_string_21, true, "JSON Object with tokens"},
+        {json_string_22, false, "JSON Object without tokens"},
+        {json_string_23, false, "JSON Object without tokens"},
+        {json_string_24, false, "JSON Object without tokens"},
+        {json_string_25, false, "JSON Object without tokens"},
+        {json_string_26, false, "JSON Object without tokens"},
+        {json_string_27, false, "JSON Object without tokens"},
         {"Hello world, no tokens here!", false, "Plain text without tokens"},
         {"UUID: 550e8400-e29b-41d4-a716-446655440000", true, "Text with UUID"},
         {"Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U", true, "Text with JWT"},
@@ -899,239 +1308,6 @@ void runScanningTests()
         std::string description;
     };
 
-    std::string json_string_1 = R"({
-        "id": "d34d8a52-3e28-4b62-8e11-1e0e5a8f27cf",
-        "name": "John Doe",
-        "username": "johndoe",
-        "apikey": "sk_live_aBcDeFgHiJkLmNoPqRsTuVwXyZ",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-    })";
-
-    std::string json_string_2 = R"({
-        "user_id": "usr_1a2b3c4d",
-        "username": "alex_morgan",
-        "login_timestamp": "2025-10-19T16:25:00Z",
-        "session_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbGV4X21vcmdhbiIsImV4cCI6MTczOTg0ODAwMCwiaWF0IjoxNzM5ODQ0NDAwfQ.h3g9s7aF4JkLpWqRt8uXzVn_C6bZ2eY1dDfG5hI0jKo"
-    })";
-
-    std::string json_string_3 = R"({
-        "event_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-        "service": "payment-gateway",
-        "level": "INFO",
-        "message": "Payment of 50.00 USD processed successfully for order #ORD-9876."
-    })";
-
-    std::string json_string_4 = R"({
-        "service_name": "weather_api_client",
-        "version": "v1.2.0",
-        "timeout_ms": 5000,
-        "api_key": "pk_live_fA7bC9dE1gH3jK5mN7pQ9sT2vX4z"
-    })";
-
-    std::string json_string_5 = R"({
-        "filename": "firmware_update_v3.bin",
-        "filesize_bytes": 8388608,
-        "version": "3.0.1-stable",
-        "checksum": {
-            "algorithm": "sha256",
-            "hash": "a1b2c3d4e5f678901234567890abcdef1234567890abcdef1234567890abcdefabcx"
-        }
-    })";
-
-    std::string json_string_6 = R"({
-        "document_id": "DOC-LEGAL-2025-042",
-        "signer_id": "signer_jane_doe",
-        "timestamp": "2025-10-19T12:00:00Z",
-        "signature": {
-            "algorithm": "sha512",
-            "hash": "3c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234abcx"
-        }
-    })";
-
-    std::string json_string_7 = R"({
-        "release_name": "QuantumLeap v2.5.0",
-        "asset_url": "https://example.com/downloads/quantumleap-v2.5.0.zip",
-        "release_date": "2025-10-18",
-        "verification_hashes": {
-            "sha224": "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42fabcx",
-            "sha384": "0933909688419962a559286d525031b6833b38101377284563a819b62a63816405204487cc5a36376511356a6431f4e5abcx"
-        }
-    })";
-
-    std::string json_string_8 = R"({
-        "type": "service_account",
-        "project_id": "your-gcp-project-12345",
-        "private_key_id": "a1b2c3d4e5f67890abcdef1234567890abcdef12",
-        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQD... (long key content) ...\n-----END PRIVATE KEY-----\n",
-        "client_email": "my-service-account@your-gcp-project-12345.iam.gserviceaccount.com",
-        "client_id": "123456789012345678901",
-        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-        "token_uri": "https://oauth2.googleapis.com/token",
-        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40your-gcp-project-12345.iam.gserviceaccount.com"
-    })";
-
-    std::string json_string_9 = R"|({
-        "event_trace_id": "c7a8b6e0-4f5a-4b9d-8c1e-2f0a1b3d4e5f",
-        "timestamp": "2025-10-19T11:05:42Z",
-        "source_ip": "203.0.113.75",
-        "auth_details": {
-            "method": "bearer",
-            "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLmV4YW1wbGUuY29tIiwiYXVkIjoiYXBpLmV4YW1wbGUuY29tIiwic3ViIjoidXNlcl80MjcifQ.aBcDeFgHiJkLmNoPqRsTuVwXyZ... (signature)"
-        },
-        "client_key": "sk_live_aBcDeFgHiJkLmNoPqRsTuVwXyZ"
-    })|";
-
-    std::string json_string_10 = R"({
-        "user_profile": "developer_jane",
-        "mfa_enabled": true,
-        "authorized_devices": [
-            "2b8a7c1d-1e1f-4b6e-8d3c-9a0b1c2d3e4f",
-            "9f8b7a6d-5e4f-4c3e-8b1a-2d3c4e5f6a7b",
-            "6c5b4a3d-2e1f-4a9b-8c7d-6e5f4a3b2c1d"
-        ]
-    })";
-
-    std::string json_string_11 = R"({
-        "commit_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "parent_hash": "da9e7b23d9a1f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5",
-        "author": "Alice",
-        "message": "feat: Implement new token scanning module",
-        "attestation": {
-            "type": "binary_integrity",
-            "hash": "4d1a2b3c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234",
-            "algorithm": "sha512"
-        }
-    })";
-
-    std::string json_string_12 = R"({
-        "tx_id": "f8a7e2c3d4b5a6978d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e",
-        "block_height": 840000,
-        "inputs": [
-            {
-            "from_address_hash": "3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f",
-            "algorithm": "sha384"
-            }
-        ],
-        "outputs": [
-            {
-            "to_address_hash": "c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
-            "algorithm": "sha224"
-            }
-        ]
-    })";
-
-    std::string json_string_13 = R"({
-        "log_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
-        "level": "ERROR",
-        "service": "authentication-service",
-        "message": "Failed to validate user credentials.",
-        "payload": "{\"error_code\": 101, \"attempt_id\": \"b8c6e1f0-5d4a-4c3b-8a29-1e0f2d3c4b5a\", \"api_key_used\": \"pk_test_aBcDeFgHiJkLmNoPqRsTuVwXyZ\"}"
-    })";
-
-    std::string json_string_14 = R"({
-        "transaction_id": "txn_789123",
-        "data": {
-            "user_info": {
-            "profile": {
-                "user_id": 1024,
-                "session_data": {
-                "is_active": true,
-                "jwt": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZWVwbHlfbmVzdGVkX3Rva2VuIiwiZXhwIjoxNzM5ODU5MjAwfQ.N_fWbY8zQj_V9gL6rHk2wXzYj_C7bZ2eY1dDfG5hI0j"
-                }
-            }
-            }
-        }
-    })";
-
-    std::string json_string_15 = R"({
-        "artifact_id": "build-package-v4.2.1",
-        "build_date": "2025-10-19",
-        "integrity_hashes": [
-            "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f",
-            "0933909688419962a559286d525031b6833b38101377284563a819b62a63816405204487cc5a36376511356a6431f4e5",
-            "This is not a hash, just a string.",
-            "4d1a2b3c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
-        ]
-    })";
-
-    std::string json_string_16 = R"({
-        "product_id": "PROD-XYZ-789",
-        "is_active": true,
-        "description": "This product connects to our new API. Use your request ID (e.g., '123e4567-e89b-12d3-a456-426614174000') for tracking.",
-        "related_docs": [
-            "doc_1", "doc_2"
-        ]
-    })";
-
-    std::string json_string_17 = R"({
-        "acl_id": "acl-prod-config-001",
-        "version": 3,
-        "user_permissions": {
-            "4a0c8b3d-1e1f-4b6e-8d3c-9a0b1c2d3e4f": {
-            "role": "admin",
-            "assigned_apikey": "sk_prod_Z1Y2X3W4V5U6T7S8R9Q0P",
-            "last_session_jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YTBjOGIzZC0xZTFmLTRiNmUtOGQzYy05YTBiMWMyZDNlNGYiLCJyb2xlIjoiYWRtaW4ifQ.eW5jb2RlZF9zaWduYXR1cmU"
-            },
-            "5b1d9c4e-2f2a-5c7f-9e4d-0a1c2d3e4f5a": {
-            "role": "editor",
-            "assigned_apikey": "pk_test_A9B8C7D6E5F4G3H2I1J0K",
-            "last_session_jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjFkOWM0ZS0yZjJhLTVjN2YtOWU0ZC0wYTFjMmQzZTRmNWEiLCJyb2xlIjoiZWRpdG9yIn0.ZGlmZmVyZW50X3NpZ25hdHVyZQ"
-            }
-        }
-    })";
-
-    std::string json_string_18 = R"|({
-        "event_id": "2a8f8a1e-3b2c-4d5e-8f9a-0b1c2d3e4f5a",
-        "type": "invoice.payment_succeeded",
-        "created_at": "2025-10-19T16:30:00Z",
-        "signature_header": "sha256=a1b2c3d4e5f678901234567890abcdef1234567890abcdef1234567890abcdef",
-        "data": {
-            "customer_id": "cus_1a2b3c4d",
-            "invoice_pdf_url": "https://example.com/invoices/inv_456.pdf",
-            "trace_id": "c7a8b6e0-4f5a-4b9d-8c1e-2f0a1b3d4e5f"
-        }
-    })|";
-
-    std::string json_string_19 = R"|({
-        "service_name": "user-profile-service",
-        "database_url": "postgres://user:Abc.123@db.example.com:5432/profiles",
-        "cache_enabled": true,
-        "feature_flags": {
-            "enable_new_dashboard": true,
-            "beta_access_key": "ff_live_a1b2c3d4e5f6g7h8i9j0k"
-        },
-        "deployment_id": "d34d8a52-3e28-4b62-8e11-1e0e5a8f27cf"
-    })|";
-
-    std::string json_string_20 = R"|({
-        "error": {
-            "type": "authentication_error",
-            "code": "api_key_invalid",
-            "message": "The provided API key is not valid. Please check your credentials.",
-            "request_id": "9f8b7a6d-5e4f-4c3e-8b1a-2d3c4e5f6a7b"
-        }
-    })|";
-
-    std::string json_string_21 = R"|({
-        "batch_id": "batch_6c5b4a3d-2e1f-4a9b-8c7d-6e5f4a3b2c1d",
-        "source_system": "inventory-management",
-        "items": [
-            {
-            "item_id": "0a9b8c7d-6e5f-4a3b-2c1d-0a9b8c7d6e5f",
-            "action": "UPDATE_STOCK",
-            "data": { "sku": "XYZ-123", "quantity": 100 }
-            },
-            {
-            "item_id": "1b2c3d4e-5f6a-7b8c-9d0e-1f2a3b4c5d6e",
-            "action": "PROCESS_RETURN",
-            "data": { "order_id": "ORD-555" },
-            "processing_token": "eyJhbGciOiJIUzI1NiJ9.eyJpdGVtX2lkIjoiMWIyYzNkNGUtNWY2YS03YjhiLTlkMGUtMWYyYTNiNGM1ZDZlIn0.another_fake_signature"
-            }
-        ]
-    })|";
-
     std::vector<TestCase> tests = {
         {json_string_1, 3, {TokenType::UUID, TokenType::API_KEY_SIMPLE, TokenType::JWT}, "JSON with UUID, API Key, and JWT"},
         {json_string_2, 1, {TokenType::JWT}, "JSON with JWT"},
@@ -1154,6 +1330,12 @@ void runScanningTests()
         {json_string_19, 2, {TokenType::API_KEY_SIMPLE, TokenType::UUID}, "Application config with feature flag key"},
         {json_string_20, 1, {TokenType::UUID}, "API error response with request_id"},
         {json_string_21, 4, {TokenType::UUID, TokenType::UUID, TokenType::UUID, TokenType::JWT}, "Batch job with tokens in array"},
+        {json_string_22, 0, {}, "No tokens"},
+        {json_string_23, 0, {}, "No tokens"},
+        {json_string_24, 0, {}, "No tokens"},
+        {json_string_25, 0, {}, "No tokens"},
+        {json_string_26, 0, {}, "No tokens"},
+        {json_string_27, 0, {}, "No tokens"},
         {"Backend development uses UUID: 550e8400-e29b-41d4-a716-446655440000 for tracking", 1, {TokenType::UUID}, "UUID in text"},
         {"JWT token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c", 1, {TokenType::JWT}, "JWT in text"},
         {"API key: sk_live_12345abcde67890fghij11223", 1, {TokenType::API_KEY_SIMPLE}, "Simple API key"},
@@ -1211,6 +1393,17 @@ void runPerformanceBenchmark()
     std::cout << std::string(100, '=') << "\n";
 
     std::vector<std::string> testCases = {
+        json_string_1,
+        json_string_2,
+        json_string_3,
+        json_string_4,
+        json_string_5,
+        json_string_6,
+        json_string_7,
+        json_string_8,
+        json_string_9,
+        json_string_10,
+        json_string_11,
         "UUID: 550e8400-e29b-41d4-a716-446655440000",
         "JWT: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
         "API Key: sk_live_12345abcde67890fghij11223",
