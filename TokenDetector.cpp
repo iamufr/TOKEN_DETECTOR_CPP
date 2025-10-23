@@ -723,28 +723,28 @@ const std::string json_string_1 = R"({
         "username": "johndoe",
         "apikey": "sk_live_aBcDeFgHiJkLmNoPqRsTuVwXyZ",
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-    })";
+})";
 
 const std::string json_string_2 = R"({
         "user_id": "usr_1a2b3c4d",
         "username": "alex_morgan",
         "login_timestamp": "2025-10-19T16:25:00Z",
         "session_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbGV4X21vcmdhbiIsImV4cCI6MTczOTg0ODAwMCwiaWF0IjoxNzM5ODQ0NDAwfQ.h3g9s7aF4JkLpWqRt8uXzVn_C6bZ2eY1dDfG5hI0jKo"
-    })";
+})";
 
 const std::string json_string_3 = R"({
         "event_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
         "service": "payment-gateway",
         "level": "INFO",
         "message": "Payment of 50.00 USD processed successfully for order #ORD-9876."
-    })";
+})";
 
 const std::string json_string_4 = R"({
         "service_name": "weather_api_client",
         "version": "v1.2.0",
         "timeout_ms": 5000,
         "api_key": "pk_live_fA7bC9dE1gH3jK5mN7pQ9sT2vX4z"
-    })";
+})";
 
 const std::string json_string_5 = R"({
         "filename": "firmware_update_v3.bin",
@@ -754,7 +754,7 @@ const std::string json_string_5 = R"({
             "algorithm": "sha256",
             "hash": "a1b2c3d4e5f678901234567890abcdef1234567890abcdef1234567890abcdefabcx"
         }
-    })";
+})";
 
 const std::string json_string_6 = R"({
         "document_id": "DOC-LEGAL-2025-042",
@@ -764,7 +764,7 @@ const std::string json_string_6 = R"({
             "algorithm": "sha512",
             "hash": "3c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234abcx"
         }
-    })";
+})";
 
 const std::string json_string_7 = R"({
         "release_name": "QuantumLeap v2.5.0",
@@ -774,7 +774,7 @@ const std::string json_string_7 = R"({
             "sha224": "d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42fabcx",
             "sha384": "0933909688419962a559286d525031b6833b38101377284563a819b62a63816405204487cc5a36376511356a6431f4e5abcx"
         }
-    })";
+})";
 
 const std::string json_string_8 = R"({
         "type": "service_account",
@@ -787,7 +787,7 @@ const std::string json_string_8 = R"({
         "token_uri": "https://oauth2.googleapis.com/token",
         "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
         "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40your-gcp-project-12345.iam.gserviceaccount.com"
-    })";
+})";
 
 const std::string json_string_9 = R"|({
         "event_trace_id": "c7a8b6e0-4f5a-4b9d-8c1e-2f0a1b3d4e5f",
@@ -798,7 +798,7 @@ const std::string json_string_9 = R"|({
             "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLmV4YW1wbGUuY29tIiwiYXVkIjoiYXBpLmV4YW1wbGUuY29tIiwic3ViIjoidXNlcl80MjcifQ.aBcDeFgHiJkLmNoPqRsTuVwXyZ... (signature)"
         },
         "client_key": "sk_live_aBcDeFgHiJkLmNoPqRsTuVwXyZ"
-    })|";
+})|";
 
 const std::string json_string_10 = R"({
         "user_profile": "developer_jane",
@@ -808,7 +808,7 @@ const std::string json_string_10 = R"({
             "9f8b7a6d-5e4f-4c3e-8b1a-2d3c4e5f6a7b",
             "6c5b4a3d-2e1f-4a9b-8c7d-6e5f4a3b2c1d"
         ]
-    })";
+})";
 
 const std::string json_string_11 = R"({
         "commit_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -820,7 +820,7 @@ const std::string json_string_11 = R"({
             "hash": "4d1a2b3c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234",
             "algorithm": "sha512"
         }
-    })";
+})";
 
 const std::string json_string_12 = R"({
         "tx_id": "f8a7e2c3d4b5a6978d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e",
@@ -837,7 +837,7 @@ const std::string json_string_12 = R"({
             "algorithm": "sha224"
             }
         ]
-    })";
+})";
 
 const std::string json_string_13 = R"({
         "log_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
@@ -845,7 +845,7 @@ const std::string json_string_13 = R"({
         "service": "authentication-service",
         "message": "Failed to validate user credentials.",
         "payload": "{\"error_code\": 101, \"attempt_id\": \"b8c6e1f0-5d4a-4c3b-8a29-1e0f2d3c4b5a\", \"api_key_used\": \"pk_test_aBcDeFgHiJkLmNoPqRsTuVwXyZ\"}"
-    })";
+})";
 
 const std::string json_string_14 = R"({
         "transaction_id": "txn_789123",
@@ -860,7 +860,7 @@ const std::string json_string_14 = R"({
             }
             }
         }
-    })";
+})";
 
 const std::string json_string_15 = R"({
         "artifact_id": "build-package-v4.2.1",
@@ -872,7 +872,7 @@ const std::string json_string_15 = R"({
             "This is not a hash, just a string.",
             "4d1a2b3c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
         ]
-    })";
+})";
 
 const std::string json_string_16 = R"({
         "product_id": "PROD-XYZ-789",
@@ -881,7 +881,7 @@ const std::string json_string_16 = R"({
         "related_docs": [
             "doc_1", "doc_2"
         ]
-    })";
+})";
 
 const std::string json_string_17 = R"({
         "acl_id": "acl-prod-config-001",
@@ -898,7 +898,7 @@ const std::string json_string_17 = R"({
             "last_session_jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjFkOWM0ZS0yZjJhLTVjN2YtOWU0ZC0wYTFjMmQzZTRmNWEiLCJyb2xlIjoiZWRpdG9yIn0.ZGlmZmVyZW50X3NpZ25hdHVyZQ"
             }
         }
-    })";
+})";
 
 const std::string json_string_18 = R"|({
         "event_id": "2a8f8a1e-3b2c-4d5e-8f9a-0b1c2d3e4f5a",
@@ -910,7 +910,7 @@ const std::string json_string_18 = R"|({
             "invoice_pdf_url": "https://example.com/invoices/inv_456.pdf",
             "trace_id": "c7a8b6e0-4f5a-4b9d-8c1e-2f0a1b3d4e5f"
         }
-    })|";
+})|";
 
 const std::string json_string_19 = R"|({
         "service_name": "user-profile-service",
@@ -921,7 +921,7 @@ const std::string json_string_19 = R"|({
             "beta_access_key": "ff_live_a1b2c3d4e5f6g7h8i9j0k"
         },
         "deployment_id": "d34d8a52-3e28-4b62-8e11-1e0e5a8f27cf"
-    })|";
+})|";
 
 const std::string json_string_20 = R"|({
         "error": {
@@ -930,7 +930,7 @@ const std::string json_string_20 = R"|({
             "message": "The provided API key is not valid. Please check your credentials.",
             "request_id": "9f8b7a6d-5e4f-4c3e-8b1a-2d3c4e5f6a7b"
         }
-    })|";
+})|";
 
 const std::string json_string_21 = R"|({
         "batch_id": "batch_6c5b4a3d-2e1f-4a9b-8c7d-6e5f4a3b2c1d",
@@ -948,7 +948,7 @@ const std::string json_string_21 = R"|({
             "processing_token": "eyJhbGciOiJIUzI1NiJ9.eyJpdGVtX2lkIjoiMWIyYzNkNGUtNWY2YS03YjhiLTlkMGUtMWYyYTNiNGM1ZDZlIn0.another_fake_signature"
             }
         ]
-    })|";
+})|";
 
 const std::string json_string_22 = R"|({
     "batch_id": "daily-sync-20251020-001",
@@ -1385,12 +1385,106 @@ void runScanningTests()
     std::cout << "Result: " << passed << "/" << tests.size() << " passed (" << (passed * 100 / tests.size()) << "%)\n\n";
 }
 
-void runPerformanceBenchmark()
+// ============================================================================
+// PERFORMANCE BENCHMARKS
+// ============================================================================
+
+void runContainsPerformanceBenchmark()
 {
     std::cout << "\n"
               << std::string(100, '=') << "\n";
-    std::cout << "=== PERFORMANCE BENCHMARK ===\n";
-    std::cout << std::string(100, '=') << "\n";
+    std::cout << "=== CONTAINS PERFORMANCE BENCHMARK ===\n";
+    std::cout << std::string(100, '=') << "\n\n";
+
+    std::vector<std::string> testCases = {
+        json_string_1,
+        json_string_2,
+        json_string_3,
+        json_string_4,
+        json_string_5,
+        json_string_6,
+        json_string_7,
+        json_string_8,
+        json_string_9,
+        json_string_10,
+        json_string_11,
+        "UUID: 550e8400-e29b-41d4-a716-446655440000",
+        "JWT: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "API Key: sk_live_12345abcde67890fghij11223",
+        "SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "SHA-512: cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e",
+        "Multiple: 550e8400-e29b-41d4-a716-446655440000 and e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "No tokens here",
+        "The evolution of backend architecture from singular, monolithic applications into distributed ecosystems of microservices has fundamentally reshaped the challenges of security and system observability. In the past, a single, unified application contained all its logic within a shared environment, making communication trivial and security a matter of protecting the outer perimeter. Today, however, a A JWT is the standard for stateless authentication and authorization in distributed systems, functioning like a digitally signed passport. Unlike old stateful sessions that required a server to maintain a user's login state, a JWT is a self-contained object that carries all necessary information within it. This token, such as eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNvcGhvcy1rZXktMjAyNCJ9.eyJhdWQiOiIxIiwianRpIjoiNTBlYmVmOWYyYTc1YzdjNTY3NDUwMmIwYjdjMjRmNjMyImp0aSI6ImY4YzNjMWI3LWEzZDktNGIyMS04YTc2LTlkM2IwZjdjMmUwYSIsInNjb3BlIjoicmVhZDpwcm9kdWN0cyODE1ZGVhYWQ5MTMwNDk3Njk5NGFkMzNkZmY4NzRkZjNmNzI4NDJkYjE2ZWI2MjIiLCJpYXQiOjE3NjAxOTIwNjcuOTc3MTc0MDQzNjU1Mzk1NTA3ODEyNSwibmJmIjoxNzYwMTkyMDY3Ljk3NzE3NjkwNDY3ODM0NDcyNjU2MjUsImV4cCI6MTc3NTkxNjg2Ny45NzIyMTQ5MzcyMTAwODMwMDc4MTI1LCJzdWIiOiIxMjk4Iiwic2NvcGVzIjpbXX0.jd-4_RH1m_nmhaFJxa4V-t40JyGExlAqO0z4etDOGJQZd4fol-fSAcqEBhLrkumQC8s9rm8EIi9YNAPs80BUoMp5l3na039u9Ob6hK1I1rW-VpmIWKww2Wrl6aWh73CocyPEbCiROMVdDeRcJo-pfLDzy7J1dPoxouGNKfeSNOitkFAoCE1cfgtXsSMjhJ6Ax5uj_fKpiwZdT-NpUKMl-aKZ8kSZYStHHnZ_M-1s5xBY5nRjloiDEfDs_u_XNZQZ8Z4qvckmZyiYoaqS5lJkVQkDZkvZtSehLb2G50oFKwopopvgfN8t5LWvQVrqF55CZXcep7ZB8EfWLxbubfguSCCu5VsfA6pUaeN2YJuebjb_qCf0S7xWYCCNL9bKywbwhSbTs2s8y2wUTKsCfzwF3SQDwUNY8YhJW9GYVMZ2adgOCwYl3HDmTlHMnolA8V7HGLx3gxi8t3Mw0RYRSBdjbcfPbpBS7kAQ2v6rq-h9XMqXMDxHOKnxaw_u0ymTOf4QNV2SUBIghk6n1bmNynwaNxSqi9Xa7XYpyIlfN56uhZBXAAf8w-J0AjW-bkTmSg9no3aJwSgEcwghSYvsVm3PnhpQZvL5O2gLK4nbOYZQL5eWRlQbme4N6DHD5sTqYKprva9RmBeF7jAfvYUARDZvlQTb69AHUe2-Y4d_E2JbTAQ, is composed of three parts: a header specifying the signing algorithm, a payload containing claims about the user or service (like their ID, roles, and permissions via scopes), and a cryptographic signature. When a service receives a request, it doesn't need to call back to an authentication server; it can independented this role, modern systems demand more secure and structured credentials, such as a service account key. This is often a JSON object that contains a collection of metadata and, most critically, a private key. An example of such a key would be",
+        R"(The evolution of backend architecture from singular, monolithic applications into distributed c9a6b4c8-4a6e-4b0f-8f1d-2e3c7d6a5b4e ecosystems of microservices has fundamentally reshaped the challenges of security and system observability. In the past, a single, unified application contained all its logic within a shared environment, making communication trivial and security a matter of protecting the outer perimeter. Today, however, a A JWT is the standard for stateless authentication and authorization in distributed systems, functioning like a digitally signed passport. Unlike old stateful sessions that required a server to maintain a user's login state, a JWT is a self-contained object that carries all necessary information within it. This token, such as eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNvcGhvcy1rZXktMjAyNCJ9.eyJhdWQiOiIxIiwianRpIjoiNTBlYmVmOWYyYTc1YzdjNTY3NDUwMmIwYjdjMjRmNjMyImp0aSI6ImY4YzNjMWI3LWEzZDktNGIyMS04YTc2LTlkM2IwZjdjMmUwYSIsInNjb3BlIjoicmVhZDpwcm9kdWN0cyODE1ZGVhYWQ5MTMwNDk3Njk5NGFkMzNkZmY4NzRkZjNmNzI4NDJkYjE2ZWI2MjIiLCJpYXQiOjE3NjAxOTIwNjcuOTc3MTc0MDQzNjU1Mzk1NTA3ODEyNSwibmJmIjoxNzYwMTkyMDY3Ljk3NzE3NjkwNDY3ODM0NDcyNjU2MjUsImV4cCI6MTc3NTkxNjg2Ny45NzIyMTQ5MzcyMTAwODMwMDc4MTI1LCJzdWIiOiIxMjk4Iiwic2NvcGVzIjpbXX0.jd-4_RH1m_nmhaFJxa4V-t40JyGExlAqO0z4etDOGJQZd4fol-fSAcqEBhLrkumQC8s9rm8EIi9YNAPs80BUoMp5l3na039u9Ob6hK1I1rW-VpmIWKww2Wrl6aWh73CocyPEbCiROMVdDeRcJo-pfLDzy7J1dPoxouGNKfeSNOitkFAoCE1cfgtXsSMjhJ6Ax5uj_fKpiwZdT-NpUKMl-aKZ8kSZYStHHnZ_M-1s5xBY5nRjloiDEfDs_u_XNZQZ8Z4qvckmZyiYoaqS5lJkVQkDZkvZtSehLb2G50oFKwopopvgfN8t5LWvQVrqF55CZXcep7ZB8EfWLxbubfguSCCu5VsfA6pUaeN2YJuebjb_qCf0S7xWYCCNL9bKywbwhSbTs2s8y2wUTKsCfzwF3SQDwUNY8YhJW9GYVMZ2adgOCwYl3HDmTlHMnolA8V7HGLx3gxi8t3Mw0RYRSBdjbcfPbpBS7kAQ2v6rq-h9XMqXMDxHOKnxaw_u0ymTOf4QNV2SUBIghk6n1bmNynwaNxSqi9Xa7XYpyIlfN56uhZBXAAf8w-J0AjW-bkTmSg9no3aJwSgEcwghSYvsVm3PnhpQZvL5O2gLK4nbOYZQL5eWRlQbme4N6DHD5sTqYKprva9RmBeF7jAfvYUARDZvlQTb69AHUe2-Y4d_E2JbTAQ, is composed of three parts: a header specifying the signing algorithm, a payload containing claims about the user or service (like their ID, roles, and permissions via scopes), and a cryptographic signature. When a service receives a request, it doesn't need to call back to an authentication server; it can independented this role, modern systems demand more secure and structured credentials, such as a service account key. This is often a JSON object that contains a collection of metadata and, most critically, a private key. An example of such a key would be {"type":"service_account","project_id":"global-data-pipeline","private_key_id":"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2","private_key":"-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQ...\\n-----END PRIVATE KEY-----\\n","client_email":"data-processor@global-data-pipeline.iam.gserviceaccount.com","client_id":"109876543210987654321","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token"}. A backend service uses this file not as a direct authentication token, but as a source of truth to prove its identity to an authorization server. It uses the embedded private key to sign a request, and in return, receives a short-lived access token (often a JWT). It then uses this temporary token to make its actual API calls. This flow prevents the long-lived, highly sensitive private key from being sent over the network repeatedly, dramatically improving the security posture. Together, these three tokens—the UUID for traceability, the JWT for user and service authentication, and the service account key for machine identity—form the bedrock of secure, scalable, and observable backend systems, enabling the intricate yet resilient dance of modern microservice communication.)",
+        std::string(1000, 'x') + "550e8400-e29b-41d4-a716-446655440000" + std::string(1000, 'y'),
+        "Complex text with UUID c9a6b4c8-4a6e-4b0f-8f1d-2e3c7d6a5b4e and JWT eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzdmMtb3JkZXItcHJvY2Vzc29yIiwic2NvcGUiOiJ3cml0ZTpvcmRlcnMifQ.M9f8aB7nKpWc2xL5dE8tGgR0jHwJ9lY4zU3vB6sC7xO",
+        R"({"type":"service_account","project_id":"test-project","private_key":"-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQ...\n-----END PRIVATE KEY-----\n","client_email":"test@project.iam.gserviceaccount.com"})"};
+
+    const int numThreads = std::thread::hardware_concurrency();
+    const int iterationsPerThread = 100000;
+
+    std::cout << "Threads: " << numThreads << std::endl;
+    std::cout << "Iterations per thread: " << iterationsPerThread << std::endl;
+    std::cout << "Test cases: " << testCases.size() << "\n";
+    std::cout << "Total operations: " << (numThreads * iterationsPerThread * testCases.size()) << "\n";
+    std::cout << "Starting benchmark...\n"
+              << std::flush;
+
+    auto start = std::chrono::high_resolution_clock::now();
+    std::atomic<long long> totalContainsTrue{0};
+    std::atomic<long long> totalContainsFalse{0};
+    std::vector<std::thread> threads;
+
+    for (int t = 0; t < numThreads; ++t)
+    {
+        threads.emplace_back(
+            [&testCases, &totalContainsTrue, &totalContainsFalse, iterationsPerThread]()
+            {
+                auto scanner = TokenDetectorFactory::createScanner();
+                long long localTrueCount = 0;
+                long long localFalseCount = 0;
+                for (int i = 0; i < iterationsPerThread; ++i)
+                {
+                    for (const auto &test : testCases)
+                    {
+                        bool hasToken = scanner->contains(test);
+                        if (hasToken)
+                            ++localTrueCount;
+                        else
+                            ++localFalseCount;
+                    }
+                }
+                totalContainsTrue += localTrueCount;
+                totalContainsFalse += localFalseCount;
+            });
+    }
+
+    for (auto &thread : threads)
+        thread.join();
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+    long long totalOps = static_cast<long long>(numThreads) * iterationsPerThread * testCases.size();
+
+    std::cout << "\n"
+              << std::string(100, '-') << "\n";
+    std::cout << "RESULTS:\n";
+    std::cout << std::string(100, '-') << "\n";
+    std::cout << "Time: " << duration.count() << " ms\n";
+    std::cout << "Ops/sec: " << (totalOps * 1000 / duration.count()) << "\n";
+    std::cout << "Contains returned TRUE: " << totalContainsTrue.load() << " times\n";
+    std::cout << "Contains returned FALSE: " << totalContainsFalse.load() << " times\n";
+    std::cout << "Total checks: " << (totalContainsTrue.load() + totalContainsFalse.load()) << "\n";
+    std::cout << std::string(100, '=') << "\n\n";
+}
+
+void runExtractPerformanceBenchmark()
+{
+    std::cout << "\n"
+              << std::string(100, '=') << "\n";
+    std::cout << "=== EXTRACT PERFORMANCE BENCHMARK ===\n";
+    std::cout << std::string(100, '=') << "\n\n";
 
     std::vector<std::string> testCases = {
         json_string_1,
@@ -1491,7 +1585,8 @@ int main()
             std::cout << "  Value: " << tok.value << "\n\n";
         }
 
-        runPerformanceBenchmark();
+        runContainsPerformanceBenchmark();
+        runExtractPerformanceBenchmark();
 
         std::cout << "\n"
                   << std::string(100, '=') << std::endl;
